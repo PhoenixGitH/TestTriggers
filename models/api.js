@@ -6,6 +6,7 @@ const Schema = mongoose.Schema
 const APIModel = Schema({
   params: { type: Array, items: { type: 'object', properties: { tipo: String, nombre: String, descripcion: String }, default: [] } },
   url: { type: String, required: true },
+  values: { type: Array, items: { type: 'object', properties: { nombre: String, descripcion: String }, default: [] } },
   description: String,
   name: String
 })

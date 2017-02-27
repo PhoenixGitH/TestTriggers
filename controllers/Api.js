@@ -1,7 +1,7 @@
 'use strict'
 
 // Data base models
-const API = require('../models/Api')
+const API = require('../models/api')
 
 function getAPIs (req, res) {
   API.find({}, (err, APIs) => {
@@ -43,13 +43,13 @@ function sendAPI (req, res) {
   console.log('POST /api/API')
   console.log(req.body)
 
-  let API = new API()
-  API.name = req.body.name
-  API.description = req.body.description
-  API.url = req.body.url
-  API.params = req.body.params
+  let api = new API()
+  api.name = req.body.name
+  api.description = req.body.description
+  api.url = req.body.url
+  api.params = req.body.params
 
-  API.save((err, APIStored) => {
+  api.save((err, APIStored) => {
     if (err) {
       res.status(500).send({message: `Error al salvar API en la base de datos: ${err}`})
     }
