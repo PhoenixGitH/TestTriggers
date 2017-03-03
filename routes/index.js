@@ -4,8 +4,8 @@ const express = require('express')
 const api = express.Router()
 
 // Controllers.
-const apiCrtl = require('../controllers/API')
-const callCrtl = require('../controllers/Call')
+const apiCrtl = require('../controllers/api')
+const callCrtl = require('../controllers/call')
 
 // Api of apis.
 api.get('/API', apiCrtl.getAPIs)
