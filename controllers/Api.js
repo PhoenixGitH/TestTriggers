@@ -18,21 +18,74 @@ function getAPIs (req, res) {
 }
 
 function getAPI (req, res) {
-  console.log('GET /api/API/APIId')
+  console.log('GET /api/API/name')
 
   // Store the params in variables.
-  let APIId = req.params.APIId
+  let name = req.params.name
 
-  API.findById(APIId, (err, API) => {
+  API.find({'name': `${name}`}, (err, api) => {
+  // API.findById(name, (err, api) => {
     if (err) {
       res.status(500).send({ message: 'Error al recuperar el objeto indicado' })
     }
-    if (!API) {
+    if (!api) {
       res.status(404).send({ message: 'No existe un API con ese id' })
     }
-    console.log(`API recuperado: ${API}`)
+    console.log(`API recuperado: ${api}`)
     // Just specify API as the key and the value has the same name.
-    res.status(200).send({API})
+    res.status(200).send(api[0])
+
+    // get walking directions from central park to the empire state building.
+
+    /* testing connectivity.
+    var obj = JSON.stringify({ 'url': `${api[0].protocol}${api[0].url}`,
+                'parametro': `${api[0].values[0].ruta}`,
+                'params': [ { 'value': 35, 'name': `${api[0].params[0].nombre}` }, { 'name': `${api[0].params[1].nombre}`, 'value': 139 } ]
+              })
+
+    console.log(obj)
+
+    var http = require('http')
+    // get is a simple wrapper for request()
+    // which sets the http method to GET
+
+    // An object of options to indicate where to post to
+    var post_options = {
+       host: 'localhost',
+       port: '3000',
+       path: '/api/Call',
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json',
+         'Content-Length': Buffer.byteLength(obj)
+       }
+   }
+
+    // Set up the request
+    var post_req = http.request(post_options, function (response) {
+      response.setEncoding('utf8')
+      var buffer = ''
+      response.on('data', function (chunk) {
+        console.log('Response: ' + chunk)
+        buffer += chunk
+      })
+      response.on('end', function (err) {
+        if (err) res.status(500).send({err})
+        // finished transferring data
+        // dump the raw data
+        // route = res.routes[0]
+
+        if (buffer) {
+          res.status(200).send(JSON.parse(buffer))
+        } else {
+          res.status(404).send({ message: 'Error, no localizado' })
+        }
+      })
+    })
+
+    // post the data
+    post_req.write(obj)
+    post_req.end() */
   })
 }
 
@@ -47,7 +100,9 @@ function sendAPI (req, res) {
   api.name = req.body.name
   api.description = req.body.description
   api.url = req.body.url
+  api.protocol = req.body.protocol
   api.params = req.body.params
+  api.values = req.body.values
 
   api.save((err, APIStored) => {
     if (err) {
@@ -89,11 +144,11 @@ function updateAPI (req, res) {
 
 function deleteAPI (req, res) {
   let APIId = req.params.APIId
-  API.findById(APIId, (err, API) => {
+  API.findById(APIId, (err, api) => {
     if (err) {
       res.status(500).send({ message: `Error al borrar el API : ${err}` })
     }
-    if (!API) {
+    if (!api) {
       res.status(404).send({ message: 'No existe API con ese id' })
     }
     API.remove(err => {

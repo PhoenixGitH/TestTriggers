@@ -4,15 +4,20 @@ const express = require('express')
 const api = express.Router()
 
 // Controllers.
-const proCrtl = require('../controllers/API')
+const apiCrtl = require('../controllers/API')
+const callCrtl = require('../controllers/Call')
 
-api.get('/API', proCrtl.getAPIs)
+// Api of apis.
+api.get('/API', apiCrtl.getAPIs)
 // Get API info by id.
-api.get('/API/:APIId', proCrtl.getAPI)
+api.get('/API/:name', apiCrtl.getAPI)
 // Access data via post.
-api.post('/API', proCrtl.sendAPI)
+api.post('/API', apiCrtl.sendAPI)
 // Modify data using API id.
-api.put('/API/:APIId', proCrtl.updateAPI)
-api.delete('/API/:APIId', proCrtl.deleteAPI)
+api.put('/API/:APIId', apiCrtl.updateAPI)
+api.delete('/API/:APIId', apiCrtl.deleteAPI)
+
+// Call api.
+api.post('/Call', callCrtl.getInfo)
 
 module.exports = api
