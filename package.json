@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/PhoenixGitH/TestTriggers"
+    "url": "https://git.heroku.com/triggerstest.git"
   },
   "author": "Javier Palomares",
   "license": "MIT",
