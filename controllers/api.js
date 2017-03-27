@@ -151,7 +151,7 @@ function deleteAPI (req, res) {
     if (!api) {
       res.status(404).send({ message: 'No existe API con ese id' })
     }
-    API.remove(err => {
+    api.remove(err => {
       if (err) {
         res.status(500).send({ message: `Error al borrar el API : ${err}` })
       }
