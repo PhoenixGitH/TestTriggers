@@ -18,7 +18,7 @@ function getInfo (req, res) {
 
   let auth = req.body.auth
   if (auth) {
-    url += eval(auth.name) + '$=' + eval(auth.value)
+    url += eval(auth.name) + '=' + eval(auth.value)
   } else {
     url = url.substring(0, url.length - 1)
   }
