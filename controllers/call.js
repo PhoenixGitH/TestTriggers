@@ -15,8 +15,13 @@ function getInfo (req, res) {
   for (i = 0; i < call.params.length; i++) {
     url += call.params[i].name + '=' + call.params[i].value + '&'
   }
-  url += 'appid=6faefe9c835124150d6f782947a4c722&'
-  url = url.substring(0, url.length - 1)
+
+  let auth = req.body.auth
+  if (auth) {
+    url += eval(auth.name) + '$=' + eval(auth.value)
+  } else {
+    url = url.substring(0, url.length - 1)
+  }
 
   console.log('call: ' + url)
 

@@ -104,6 +104,11 @@ function sendAPI (req, res) {
   api.params = req.body.params
   api.values = req.body.values
 
+  let auth = req.body.auth
+  if (auth) {
+    api.auth = auth
+  }
+
   api.save((err, APIStored) => {
     if (err) {
       res.status(500).send({message: `Error al salvar API en la base de datos: ${err}`})

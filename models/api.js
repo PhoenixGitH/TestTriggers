@@ -9,7 +9,8 @@ const APIModel = Schema({
   protocol: { type: String, required: true },
   values: { type: Array, items: { type: 'object', properties: { nombre: String, ruta: String, tipo: String }, required: true } },
   description: String,
-  name: String
+  name: String,
+  auth: { type: 'object', properties: { name: String, value: String } }
 })
 
 module.exports = mongoose.model('API', APIModel)
